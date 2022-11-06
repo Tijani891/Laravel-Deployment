@@ -1,2 +1,0 @@
-[webservers]
-18.117.164.190  ansible_ssh_user=ubuntu
