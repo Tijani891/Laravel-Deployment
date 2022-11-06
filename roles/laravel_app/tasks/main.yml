@@ -1,0 +1,33 @@
+---
+- name: clone laravel codebase
+  git:
+    repo: https://github.com/laravel/laravel.git
+    dest: /var/www/myapp
+    force: yes
+  become: yes
+
+
+- name: take ownership of myapp folder
+  file:
+    path: /var/www/myapp
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+  become: yes
+    
+- name: set permissions for Laravel storage folder
+  file:
+    path: /var/www/myapp/storage
+    state: directory
+    recurse: yes
+    mode: '0777'
+  become: yes
+
+- name: install laravel dependencies
+  composer:
+    command: update
+    working_dir: /var/www/myapp
+    prefer_dist: true
+    optimize_autoloader: true
+    no_dev: true
+    no_scripts: true
+  become: yes 

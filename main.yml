@@ -1,0 +1,40 @@
+---
+- name: Create web servers
+  become: true
+  hosts: webservers
+  environment:
+    - AWS_ACCESS_KEY_ID: "AKIA5BVBOQE6OQLXRP5L"
+    - AWS_SECRET_ACCESS_KEY: "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"
+    - COMPOSER_ALLOW_SUPERUSER: 1
+  
+  roles:
+    - app_dep
+    - php
+    - composer
+    - laravel_app
+    - apache-config
+    - postgres
+    - enable_config
+
+#   - name: Ensure apache is at the latest version
+#     ansible.builtin.yum:
+#       name: httpd
+#       state: latest
+#   - name: Write the apache config file
+#     ansible.builtin.template:
+#       src: /srv/httpd.j2
+#       dest: /etc/httpd.conf
+
+# - name: Update db servers
+#   hosts: databases
+#   remote_user: root
+
+#   tasks:
+#   - name: Ensure postgresql is at the latest version
+#     ansible.builtin.yum:
+#       name: postgresql
+#       state: latest
+#   - name: Ensure that postgresql is started
+#     ansible.builtin.service:
+#       name: postgresql
+#       state: started

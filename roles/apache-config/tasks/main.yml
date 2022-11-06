@@ -1,0 +1,33 @@
+---
+- name: copy apache config
+  copy:
+    src:  myapp.conf
+    dest: /etc/apache2/sites-available/myapp.conf
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    mode: '0644'
+  become: yes
+
+- name: set server name
+  replace:
+    path: /etc/apache2/sites-available/myapp.conf
+    regexp: '$SERVER_NAME'
+    replace: '{{ ansible_host }}'
+  become: yes
+
+
+- name: copy env file
+  copy:
+    src: /var/www/myapp/.env.example
+    remote_src: yes
+    dest: /var/www/myapp/.env
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+    mode: '0644'
+  become: yes
+
+# - name: create env for database
+#     shell: |
+#         cd /var/www/myapp
+#         nano .env
+#     become: yes

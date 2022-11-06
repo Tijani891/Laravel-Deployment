@@ -1,0 +1,14 @@
+---
+- name: enable the new config
+  shell: |
+    a2ensite myapp.conf
+    a2dissite 000-default.conf
+    a2enmod rewrite
+    service apache2 restart
+  become: yes
+
+- name: setup laravel
+  shell: |
+    cd /var/www/myapp
+    php artisan key:generate
+  become: yes

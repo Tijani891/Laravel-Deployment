@@ -1,0 +1,21 @@
+---
+
+- name: Install php
+  apt:
+      pkg: "{{ item }}"
+      state: latest
+      update_cache: yes
+  with_items:
+    - php-cli
+    - php-fpm
+    - php-curl
+    - php-gd
+    - php-intl
+    - php-mbstring
+    - php-pgsql
+    - php-xml
+    - php-zip
+  notify:
+    - Start php-fpm
+  become: yes
+

@@ -1,0 +1,21 @@
+---
+- name: "update apt packages."
+  become: yes
+  apt:
+     update_cache: yes
+
+- name: "upgrade packages"
+  become: yes
+  apt:
+     upgrade: yes
+
+- name: install packages
+  become: yes
+  apt:
+     pkg:
+       - libapache2-mod-php
+       - apache2
+       - git
+       - zip
+       - unzip
+       - curl
